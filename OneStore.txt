@@ -1,0 +1,20 @@
+2022-04-04 15:08:19.999 3227-3357/? I/Unity: 1번 TSTORE SendIABItemPurchaseT : 
+TX_00000000671548, 
+{"txid" : "TX_00000000671548", 
+"appid" : "OA00289577", 
+"signdata" : "NDSGV2wGViXNzCa0gG8B9GoV9PPZnYsoO40tvqZ0qcHNN2dUNjXAHi9zKqzqcP6ZrJWCVIBEGZ8ThLLRwBLjy19yajJL2vPFo/GtZeMDVObBVpBCg="}
+
+
+
+2022-04-04 15:36:36.106 2990-3027/com.mgamecorp.CultMatgo_OneStore I/Unity: OneStore_ParsePurchaseData : [Product]
+    orderId: ONESTORE7_000000000000000000000001569351
+    packageName: com.mgamecorp.CultMatgo_OneStore
+    productId: 0910023926
+    purchaseToken: SANDBOXT000001569351
+    purchaseTime: 1649054190000
+    purchaseId: SANDBOX3000001569351
+    developerPayload: 
+    purchaseState: 0
+    recurringState: 0
+    acknowledgeState: 0
+     || Signatures Data : BzqHWZMuDsCFjzxBQZfgwLf9XJvfzocURXHzleQa2BSqJmFP6+OJx7VxA5MWNjl4Xew4H7bOrQSO93NslGcwMhRmGZ0Ol//z5WNKzUAkSdzwNVL3wU8Vr+8Fa0jWfZxzzs3IXVq6zrYfxNAn8RoaIEbYd1P2FNyZ+Dreph8haTM=
