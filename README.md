@@ -1,2 +1,3 @@
 # 시작해 보자
-<iframe width="640" height="360" src="https://youtu.be/ky-jsqgxUuc" frameborder="0" gesture="media" allowfullscreen=""></iframe>
+
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/ky-jsqgxUuc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
