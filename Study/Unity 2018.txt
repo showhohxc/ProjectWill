@@ -1,0 +1,316 @@
+//====================================================================================================================================================
+
+Courtine 관련
+- yield return null
+  1Frame 대기 후 실행
+
+- 클래스나 함수의 설명을 사용자에게 알려줄때 유용
+/// <summary>
+/// 메소드 설명 
+/// </summary>
+/// <param name = "Index"> 이 숫자에 해당하는 값을 수정 </param>
+/// <param name = "value"> 이 값의 해당 값을 수정 </param>
+
+
+2D UI는 씬에 게임오브젝트가 생기는데, 여기엔 핵심적인 2개의 컴포넌트가 연결되어 있다.
+1. UIRoot
+위젯을 작업하기에 적합한 크기로 줄여주는 역할을 하고, Scaling Style를 담당한다.
+Scaling Style에서 텍스처의 픽셀상의 본래 크기를 유지하는 Pixel perfect가 있고, 
+파라미터에 지정한 값에 따라 화면에서 비율을 유지하는 방식인 FixedSize가 있다.
+
+2. UICamera
+버튼에 붙어있는 충돌체처럼, 각 UI요소에서 발생하는 이벤트와 관련된 메세지를 보내는것이 주된 기능이다.
+OnClick()이나 OnHover()등의 메소드가 있다.
+2. UICamera
+
+파라미터
+EventType : 카메라가 처리할 이벤트 유형을 결정한다.
+EventMask : 이벤트를 받아들일 레이어를 지정한다.
+Debug : 디버그 모드의 사용여부, UI가 의도하지 않은 방식으로 작동할 때, 유용하다.
+AllowMultiTouch : 멀티 터치 입력의 허용 여부를 결정한다.
+Sticky Tooltip : 사용여부 결정.
+Raycast Range : 특정 지점에서 특정 방향으로 소는, 보이지 않는 가상의 선이다. 중간에 다른 오브젝트와 만날 경우 진행을 멈춘다. 충돌체를 감지한 카메라는 이벤트를 처리하기 위해 마우스나 터치 입력이 발생하는 지점에서부터 정면을 향해 가상선을 그린다. 이 때 가상선의 진행 범위를 제한하면 상호작용이 발생하는 영역을 한정 할 수 있다. 기본값이 -1을 사용하면 카메라가 볼 수 있는 영역까지 가상선의 범위가 미친다.
+
+3. UIAnchor
+카메라 뷰 상에서 게임오브젝트를 이정한 지점에 고정시키기 위해 사용한다.
+
+4. UIPanel
+Panel의 목적은 위젯을 모아서 관리하고, 하나의 드로우콜로 렌더링하는 것.
+- Clipping
+  None : 클리핑을 사용하지 않는다.
+  Soft Clipping : 패널 영역을 설정 클리핑한다. Softness 값을 주어 외곽부분을 흐려지게 만든다.
+  Constrain But Dont Clip : 패널 영역을 지정하지만 클리핑은 하지 않는다.
+  
+  
+  uiDrageScrollView : 어떤 기준으로 움직일것인지 결정
+
+
+//====================================================================================================================================================
+
+Unity 2018
+- Camera PostProcess 세팅
+  ㄴ PostProcessLayer - Layer에 해당하는 구간에 PostProcessVolume 효과가 적용되는 Layer 추가
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+- PlayerSetting 에서 Scripting Runtime Version을 .NET 4.x 이상으로 올릴시 Visual Studio 2017이상의 버전이 설치되야 한다.
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+- Unity 2018 Uses
+  - TimeLien 기능   %% https://docs.unity3d.com/kr/2018.3/Manual/TimelineOverview.html
+    ㄴ 기존 Unity 사용하는 Animation 기능의 상위호환 버전 
+    ㄴ TimeLine 에 추가시 최초 PlaybleDirector가 속한 오브젝트 Bindings에 객체가 추가된다.
+    ㄴ Animation 차이 => 시네마틱 콘텐츠, 게임 시퀀스, 오디오시퀀스, 복합 파티클 효과 생성 가능 여러 오브젝트를 애니메이션화 가능
+    
+  - CineMachine 기능
+    ㄴ AssetStore 에서 제공되며 동적인 카메라 기능을 제공하여 개발자가 역동적인 카메라 액션을 구현할수 있게 서포트 지원
+  - Spawner ObjectPool 적용
+
+- Unity Repoter 관련 https://m.blog.naver.com/PostView.nhn?blogId=blue7water&logNo=221120515412&proxyReferer=https%3A%2F%2Fwww.google.com%2F
+- OnLevelWasLoaded (변경) https://exien.tistory.com/29
+//====================================================================================================================================================
+
+PlayerPrefs  :  데이터를 간단하게 저장 하는 클래스 / key값과 데이터를 넣어 저장이 가능 반대로 key값을 넣어 데이터를 꺼낼수 있다.
+
+Debug Class
+- Debug.Log : 콘솔창에 로그 메시지를 출력
+- Debug.LogError :콘솔창에 로그와 함께 에러 메시지를 출력
+- Debug.LogWarning : 콘솔창에 로그와 함께 경고 메시지를 표시 
+
+"UnityEngine". Are you missing an assembly reference?
+- Assets -> Reimport All
+
+Application.NotReachable == NetworkReachablility.EnumType
+NetworkReachablility.NotReachable : Not Connected Internet
+NetworkReachablility.ReachableViaCarrierDataNetwork : Connected Internet
+NetworkReachablility.ReachableViaLocalAreaNetwork : Connected Wifi
+
+IL2CPP
+- 빌드 세팅시 Assembly-CSharp.dll 파일에 코드가 저장된다. 이 파일은 디컴파일러로 열었을시 코드가 보이는데 이때의 코드를 IL 코드라고 한다.
+이를 방지하기 위해 빌드세팅에서 IL2CPP로 설정시 so 파일 형태로 코드가 저장되는데 이름 그대로 IL코드를 CPP형태로 변환하는 것으로 분석하기가 난해하다.
+C# -> IL -> C++
+
+//====================================================================================================================================================
+
+Input.GetAxis()   : 가상 축 반환  유저가 좌측 키 or 우측 키를 눌렀는지 알수있다. or 리턴값이 음수 양수 0 확인시 어떤 키를 눌렀는지 알 수 있다.
+AnimationType
+  Rig
+    AnimationType
+      Legacy : Animator가 사용되지 않거나 Unity를 통한 직접 애니메이션을 제작한 클립
+      Generic : Animator 사용, 3D AnimationTool에서 별도의 본 데이터를 사용시 선택
+      Humanoid : Animator 사용, 본 데이터 존재 스키닝 작업이 안되 유니티에서 지공되는 직접 데이터를 활용한 리깅할수 있게 하는 기능
+      
+  Humanoid 와 Generic 에 각각 다른 코드를 적용시켜야 한다.
+
+//====================================================================================================================================================
+
+Unity .Net NetWork
+Socket namespace
+using System.Net;
+using System.Net.Sockets; // Socket 클래스를 사용하기 위한 클래스
+using System.Threading;
+
+- IPAddress 클래스로 hostIP를 나타내면 IPEndPoint 클래스로 hostIP와 서버의 포트번호를 지정한 후 sever socket에 Bind,
+- Sever Socket은 Client 소켓에서 Connect() 요청을 보낼때 새로운 소켓을 하나 더 만들어서 Sever에서 새로운 Socket를 하나 더 만들어서 이 소켓과 통신을 한다.
+  기존에 있던 소켓은? 계속 Listen()으로 돌려주면서 다른 Client 소켓의 요청을 계속 받는것
+  ex) S소켓1이 Listen() 상태 대기 -> C소켓이 S소켓1에게 Connect() 요청
+      S소켓1은 S소켓2를 만들어서 C소켓과 통신하도록 하고 자신은 계속 Listen() 상태를 유지
+      실제 데이터 교환은 S소켓2와 C소켓끼리만 이루어지고 S소켓1은 데이터교환에 관여하지 않는다.
+      
+- Socket.Blocking()
+  블록킹이란 말그래도 블록이 되는것을 말한다.
+  accept / read등의 함수는 결과가 올 때까지 그 자리에서 멈춰있을때 블록킹 됬다고 한다.
+      
+- bind(), Listen()
+  1. Server 소켓이 listen() 대기 상태
+  2. Client 소켓이 Server 소켓에 Connect 요청
+  3. Server 소켓이 Accept() 해주고 이 때 통신을 담당하는 새로운 Server 소켓을 하나 만들어 준다.
+  
+- Sever의 상태는 클라이언트가 접속하기를 기다리며 접속하기를 기다리며 클라이언트가 접속을 시도시 Accept() 그리고 클라이언트에서 데이터를 보내오면 Recevie() 한다.
+  ㄴ 접속시도와 데이터를 받아옴을 알려주는 Event가 없기 때문에 계속해서 Polling 방식으로 확인을 해야한다. ★ 초기화 루틴에서 무한루프를 돌며 polling를 할시 프로그램 자체가
+     응답을 하지 못하기 때문에 별도의 thread를 생성해 이러한 일을 해야한다.
+     ㄴ C# 에서 Thread를 사용시 Thread 클래스 인스턴스를 선언후 생성자에서 SeverProc() 를 thread procedure를 정의해 준 후 Start() method를 호출해 thread를 시작.
+     ㄴ ex) Thread threadSever; / threadSever = new Thread(new ThreadStart(SeverProc)); / threadSever.Start();
+  ㄴ Sever에서 Client와 데이터를 주고 받을시 Sever에서 Client를 Accept하고 연결을 할당해 준후 소켓을 통해 이루어진다.
+
+
+C# lock 
+  lock 키워드는 특정 블럭의 코드를 한번에 하나의 스레드만 실행할 수 있도록 해준다. lock 안에서는 주로 object타입의 private필드를 지정 
+  lock(this)와 같이 클래스 객체 전체를 지정하는 this를 사용이 가능하며, 이는 불필요하게 모든 클래스 객체를 잠그는 효과가 있으므로, object Type의 필드를 만들어 사용하는 것 이 좋다. 
+  
+  
+  if(Application.internetReachability == NetworkReachability.NotReachable) // 인터넷이 연결이 안되어있을때 Action
+  else if(Application.internetReachability == NetworkReachability.ReachableViaCarrierDataNetWork) // 데이터로 연결이 되어있을때 Action
+  else // 와이파이로 연결이 되어있을때 Action
+  
+  [Marshal]
+  Threading 멀티 소켓 시스템 구축 
+  
+  게임서버와 소켓통신을 하는 경우 SocketLib를 사용해야한다. 소켓 라이브러리는 서버와 통신하는 로직을 별도의 쓰레드를 돌려서 사용한다.
+  소켓을 통해 게임서버와 데이터를 주고 받는 과정이 쓰레드에서 처리된다.
+  
+  
+  ★★★ Unith Socket 통신시 종료 후에 프리징현상 원인 
+          ㄴ ★★★ 기존 Unity 가 실행을 멈춘후에도 Thread가 계속해서 실행되었기 때문에 프리징현상이 발생... 네트워크 소켓의 프리징은 대부분은 Thread가 계속해서 도는 반복문이 있기때문
+          ㄴ Join() : 스레드를 중지하는데 다 실행될때 까지 기다린후 종료 / Abort() : 스레디를 중지하는데 강제종료 언제 종료될지 모른다
+          ㄴ Sleep() : Sleep 모드로 들어가게된다.
+          ㄴ 처음 소켓 통신시 스레드를 통하여 양방향 데이터를 주고 받기 때문에 종료후에도 스레드가 종료된 상태가 아니기 때문에 정상적으로 돌아가지 않아 유니티가 멈춘다
+          ㄴ C# Thread 관련 API중 절대 사용하면 안되는 함수
+              ㄴ Thread.Abort() / Thread.Interrupt()
+              
+Sever 에서 Client 접속시 ::
+LibSocketTransport:Dispatch()
+	ㄴ m_TransServer.DoAcceptClient()
+		ㄴLibInstance.p_SeverSocket.Poll(0, SelectMode.SelectRead) = True
+			ㄴ LibInstance.p_Socket = LibInstance.p_ServerSocket.Accept(); // Server에서 Client 활성화 
+
+SelectWrite : Connect가 처리중이고 연결에 성공했으면 true를 반환한다. 또는 데이터를 보낼 수 있으면 true를 반환한다.
+		그렇지 않으면 false를 반환
+
+SelectRead : Listen이 호출되었고 연결이 보류 중일시 true를 반환 or 데이터를 읽을수 있으면 true를 반환
+		연결을 닫았거나, 다시 설정, 종료하였으면 true를 반환한다. 그렇지 않으면 false를 반환
+			
+SocketError 차단되지 않는 Connect가 처리중이고 연결에 실패했으면 true를 반환. 또는 OutOfBandInline이 설정되어 있지 않고 out-of-band 데이터를 사용할수 있으면 true를 반환합니다.
+    그렇지 않으면 false를 반환합니다.
+    
+기존 서버-클라이언트 간의 추가 클라이언트 접속시 접속이 끊어지는 현상은 동기 방식을 채택했기때문... 
+  ㄴ 정식으로 할시 동기방식을 하되 테스트로 할시 비동기방식을 채택
+  ㄴ 동기 / 비동기 구분하여 코드 작성 필요 
+  
+비동기 소켓 방식
+SocketAsyncEventArgs args = new SocketAsyncEventargs();   // 비동기 소켓 처리 지원 클래스 -> 사용시 연결된 Socket 객체에 직접 접근한지 않는것을 추천 => 소켓 응용프로그램에서 사용하는 비동기 패턴을 제공하는데 있기 때문
+  ㄴ args.Completed => 주고 받을시 모두 발생하며 SocketAsyncEventArgs.LastOperation 속성을 통해 Send/Receive 어디서 오는건지 구분이 가능
+  ㄴ args.SetBuffer 를 통해 버퍼 지정이 가능
+  
+  SendAsync / ReceiveAsync 
+
+//====================================================================================================================================================
+
+Rigidbody.Impulse : rigidbody의 질량을 사용해 짧은 순간 힘을 가하는 경우에 사용 
+  
+objectPool / PoolObject 차이
+- ObjectPool 은 단일객체들을 관리하는 통합 매니저
+- PoolObject 은 단일객체를 관리
+
+Update()  FixedUpdate()  차이점
+- Update() - Script가 enable 상태일시 매 프레임마다 호출되고 일반적으로 가장 빈번하게 사용되는 함수이며 물리효과가 적용되지 않은 오브젝트의 움직임 타이머 키입력 받을시 사용
+- FixedUpdate() - 프레임 기반 호출되는 Update와 달리 FixedTimeStep에 설정된 값에 따라 일정한 간격으로 호출 물리효과가 적용된 RigidBody 오브젝트를 조정시 사용
+                    ㄴ Update() 는 불규칙한 호출로인한 물리엔진 충돌검사가 제한됨
+                    
+OnCollisionEnter / OnCollisionExit
+- Collider 끼리 충돌시 CollisionEnter 충돌 후 나갔을때 CollisionExit
+OnCollisionStay
+- 모든 Collider/Rigibody 닿아있는 Collider/Rigidbody데 대해 프레임당 한번 호출한다.
+
+OnTirggerEnter / OnTriggerExit
+- Trigger은 GameObject간의 물리적 연산을 하지 않고 충돌을 감지할 수 있다, 즉 두 GameObject가 접촉했을때 서로 튕겨 나가지 않고 그냥 통과
+- TriggerEnter : 접촉시 TriggerExit : 접촉후 나갔을때
+OnTriggerStay
+- 트리거를 건드리고 있는 각각/다른/Colider에 대해서 매 프레임 당 한번 호출된다.
+
+PostProcess 
+1. 카메라에 PostProcessLayer 추가후 레이어 설정 
+2. 카메라 Childern에 PostProcessVolume 할당
+3. PostProcessProfile에 기능 추가
+
+UGUI
+- 기존 NGUI Sorting 문제로 골머리를 쌓을필요 없이 Hierarchy 상 어느 오브젝트가 '더 아래' 있느냐에 따라 조절된다.
+- ★Canvas : 게임화면에 1:1 대응 // 모든 UI 요소는 Canvase 안에 위치해야 한다. 캔버스는 모든 UI 요소는 반드시 어떤 캔버스의 자식이어야 한다.
+  - Render Mode
+    ㄴ Overlay : UI들이 스크린 상에서만 존재하고 모든 3D 오브젝트들이 그려진 다음에 마지막에 UI요소를 덮어쓰는 방식
+    ㄴ Camera : 스크린 좌표계에 대응하는 방식 3D 좌표상에 위치를 가진다. 카메라를 기준으로 거리에 따라 떨어저 있게 되고 Canvas도 좌표를 가지게 된다.
+    ㄴ WorldSpace : vr 및 ar에서 사용 
+  - Canvas Scaler
+    ㄴ Constant Pixel Size : UI 요소가 화면 크기에 관계없이 동일한 픽셀 크기로 유지되는 상태    // 화면 크기에 따라 붙는다
+    ㄴ Scale With Screen Size : 화면이 커질수록, UI 요소도 커지는 상태, 즉 화면비율에 따라서 UI도 맞춰지는 상태   // 카메라 설정에 따라 붙는다
+    ㄴ Constant Physical Size : 화면 크기와 해상도에 관계없이 UI 요소가 동일한 물리적인 크기로 유지되는 상태    // World 3d 일경우 3d객체처럼 취급
+  
+  - ScrollView : GridLayout 기능을 붙여쓰기 매우 좋은 소재
+      ㄴ Horizontal Layout Group 
+        ㄴ Child Controls Size : 레이아웃 그룹이 자식의 너비와 높이를 제어할지 여부 확인.
+        ㄴ Child Force Expand : 추가로 사용할 수 있는 공간을 채우기 위해 자식 레이아웃을 강제로 확장할지 여부
+      ㄴ Layout Element
+        ㄴ Min Width  : 레이아웃 최소 너비
+        ㄴ Min Height : 레이아웃 최서 높이
+        ㄴ Preferred Width  : 추가 가용 너비가 할당되기 전에 이 레이아웃 요소의 선호 너비
+        ㄴ Preferred Height : 추가 가용 높이가 할당되기 전에 이 레이아웃 요소의 선호 높이
+        ㄴ Flexible Width  : 레이아웃 요소가 형제 레이아웃에 상대적으로 채워야하는 너비의 상대적 크기
+        ㄴ Flexible Height : 레이아웃 요소가 형제 레이아웃에 상대적으로 채워야하는 높이의 상대적 크기
+
+- 기본적인 Priority UI Canvas > Camera Game Object
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+[RuntimeInitializeOnLoadMethod] => Unity5.x 기능 Unity 게임이 실행될때 무조건 실행이 되는 함수
+
+System.Action => C# 에서 제공하는 Delegate(대리자) 메소드
+ㄴ public event System.Action OnShedule
+
+
+Canvas Group
+- alpha = UI 요소의 투명도 0은 완전한 투명, 1은 완전한 불투명
+
+Perspective
+  - 삼각형 모양 가깝게 설정시 양쪽 부분을 잘라서 가져오면 시야각이 좁아지므로 화면이 작아저서 상대적으로 물체가 차지하는 비중이 커지고
+    멀리 설정시 화면이 커져서 상대적으로 물체가 차지하는 비중이 작다.
+Orthographic
+  - 초기 세팅시 시야각이 넓으며 거리가 멀어도 항상 동일한 물체 크기를 가지게 된다
+  
+
+★ Light Map 관련
+- static Object : 라이트맵이 적용, GI도 텍스쳐로 구워지고 그림자또한 텍스쳐로 구워진다. 건물같은 고정 오브젝트에 적합하며 메모리 소비가 적다.
+- Dynamic Object : 철저히 무시 빛과 연산을 하지 않고, 조명의 영항을 전혀 안받느다 엠비언트 라이트라도 없을시 까맣게 나온다.
+  
+Reflection
+- 클래스를 구성하는 각종 Type에 접근하여 정보 획득
+- 획득한 정보를 이용하여 메소드를 호출하거나 필드와 속성에 접근
+- 획득한 정보를 이용하여 클래스의 타입을 동적으로 만듬
+- 획득한 정보를 이용하여 기존 인스턴스에 형식을 추가
+ex) int nNum = 11;
+    system.type type = nNum.GetType();
+
+FieldInfo
+- 제네릭 타입의 클래스의 필드에 접근해야 할시 타입을 정확히 모르고 직접 접근할수는 없고 이를 해결하는것이 FieldInfo이다.
+  재사용성이 높은 코드를 작성하기에 유용하며, 다양한 용도로 활용이 가능
+  
+//////////////////////////////////////////////////////////////////////////////////////////////////////////  
+- Vector3 Definition
+back	    Vector3(0, 0, -1)를 사용하는 간단한 방법입니다.
+down	    Vector3(0, -1, 0)를 사용하는 간단한 방법입니다.
+forward	  Vector3(0, 0, 1)를 사용하는 간단한 방법입니다.
+left	    Vector3(-1, 0, 0)를 사용하는 간단한 방법입니다.
+one   	  Vector3(1, 1, 1)를 사용하는 간단한 방법입니다.
+right 	  Vector3(1, 0, 0)를 사용하는 간단한 방법입니다.
+up	      Vector3(0, 1, 0)을 사용하는 간단한 방법입니다.
+zero	    Vector3(0, 0, 0)을 사용하는 빠른 방법입니다.
+
+Variables
+magnitude	벡터의 길이를 반환합니다. (읽기전용)
+normalized	해당 벡터의 magnitude 가 1인 벡터를 반환합니다.(읽기전용)
+sqrMagnitude	벡터의 길이의 제곱한 값을 반환합니다. (읽기전용)
+this[int]	[0], [1], [2]를 각각 사용하여 x, y, z 요소에 접근합니다.
+x	벡터의 X컴포넌트를 나타냅니다.
+y	벡터의 Y컴포넌트를 나타냅니다.
+z	벡터의 Z컴포넌트를 나타냅니다..
+
+
+
+//=========================================================================================
+DOTween
+  - 매개변수
+    ㄴ recycleAllByDefault : true 이면 새로운 트윈이 재활용되게 설정 파괴대신 풀에 다시 넣고 재사용
+    ㄴ useSafeMode : true이면 트윈이 조금 느리지만 안전해지므로 몇몇가지가 자동처리 된다. 트윈이 재생되는 동안 대상이 null이 되는것과 같은
+    ㄴ logBehaviour : logging 할 타입을 설정, 이 설정은 언제든 교체할수 있다. G.Tweeing.DOTween.logBehaviour property(기본값 ErrorsOnly)
+    
+1) Transform : 오브젝트의 기본적인 이동, 회전, 크기 변환을 일정 시간동안 변환한다.
+  transform.DoMove(Vector3 목표값, float 변화시간, (bool 정수단위 이동여부));
+  transform.DoRotate(Vector3 목표값, float 변화시간, (RotateMode 회전방식));
+  transform.DoScale(Vector3 목표값, float 변화시간);
+  transform.DoLocalMove(...); //로컬 좌표 이동
+  transform.DoMoveX(...); //x축 이동
+  (Tip!) .DoShakePosition을 사용하면 충돌 시 흔들리는 효과를 간편하게 낼 수 있다.
+  
+2) Material : 오브젝트의 컬러값, 알파값등을 일정 시간동안 부드럽게 변환한다.
+  .DoColor(Color 목표값, float 변화시간)
+  .DOFade(float 목표값, float 변화시간)
+  주로 전체적인 화면의 자연스러운 페이드 인/아웃을 위해 캔버스 그룹의 알파값을 변환시켜 사용했다.
+  (Tip!)  목표값 = 0 : Fade Out / 1 : Fade In
+
+3) Text : 일정 시간동안 텍스트가 타이핑되는 효과를 준다.
+  .DoText(string 전체텍스트, float 변화시간, (...))
