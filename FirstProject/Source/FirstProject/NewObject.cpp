@@ -10,6 +10,7 @@ UNewObject::UNewObject()
 
 void UNewObject::MyFunction()
 {
-	UE_LOG(LogTemp, Log, TEXT("This is our warning text"));
+	UE_LOG(LogTemp, Warning, TEXT("This is our warning text"));
+	UE_LOG(LogTemp, Warning, TEXT("This is our warning text2"));
 	//UE_LOG(LogTemp, Warning, TEXT("Message"));
 }
