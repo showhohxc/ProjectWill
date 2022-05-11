@@ -12,7 +12,7 @@ AFloater::AFloater()
 
 	StaticMeshPerty = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CustomStaticMesh"));
 
-	InitialLocation = FVector(0);
+	InitialLocation = FVector(300, 300, 300);
 	PlacedLoacation = FVector(0);
 	WorldOrgin = FVector(0);
 	InitialDir = FVector(0);
