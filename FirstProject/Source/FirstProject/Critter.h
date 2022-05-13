@@ -29,8 +29,14 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Mesh")
 	class USkeletalMeshComponent* m_MeshComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Mesh")
+		class USkeletalMeshComponent* m_MeshComponent2;
+
 	UPROPERTY(EditAnywhere)
 	class UCameraComponent* m_Camera;
+
+	UPROPERTY(EditAnywhere)
+	class UCameraComponent* m_SecondCamera;
 
 	UPROPERTY(EditAnywhere, Category = "Pawn Movement")
 	float fMaxSpeed;

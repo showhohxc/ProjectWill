@@ -14,6 +14,7 @@ ACritter::ACritter()
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponenet")); // Root 컴포넌트 지정		// CreateDefaultSubobject == New
 	m_MeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MeshComponenet"));	// Create 안하면 에러생겨서 팅김 
+	m_MeshComponent2 = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MeshComponenet2"));	// Create 안하면 에러생겨서 팅김 
 	//SetRootComponent(m_MeshComponent);
 	m_MeshComponent->SetupAttachment(GetRootComponent());	// m_MeshComponent를 RootComponent의 자식 컴포컴포넌트로 지정
 
@@ -55,12 +56,12 @@ void ACritter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ACritter::MoveForward(float value)
 {
-	CurrentVelocity.X = FMath::Clamp(value, -1.f, 1.f) * fMaxSpeed;
+	CurrentVelocity.Y = FMath::Clamp(value, -1.f, 1.f) * fMaxSpeed;
 }
 
 void ACritter::MoveRight(float value)
 {
-	CurrentVelocity.Y = FMath::Clamp(value, -1.f, 1.f) * fMaxSpeed;
+	CurrentVelocity.X = FMath::Clamp(value, -1.f, 1.f) * fMaxSpeed;
 }
 
 void ACritter::MousePitch(float AxValue)
