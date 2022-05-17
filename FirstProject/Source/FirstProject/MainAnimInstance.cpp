@@ -2,7 +2,8 @@
 
 
 #include "MainAnimInstance.h"
-#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/PawnMovementComponent.h"
+//#include "GameFramework/CharacterMovementComponent.h"
 
 void UMainAnimInstance::NativeInitializeAnimation()
 {
