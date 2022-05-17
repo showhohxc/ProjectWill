@@ -32,14 +32,19 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Mesh")
 		class USkeletalMeshComponent* m_MeshComponent2;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere, Category = "Movement")
+		class UColliderMovementComponent* OurMovementComponent;
+
+	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* m_Camera;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* m_SecondCamera;
 
 	UPROPERTY(EditAnywhere, Category = "Pawn Movement")
 	float fMaxSpeed;
+
+	/*virtual UPawnMovementComponent* GetMovementComponent() const override;*/
 
 private:
 	void MoveForward(float value);

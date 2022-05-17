@@ -235,3 +235,11 @@ Actor의 컴포넌트들은 subobject로 생성한다.
 TEXT()
 각각의 컴포넌트를 구분하기 위한 값이 들어간다.
 해쉬 값을 생성하기 때문에, *다른 TEXT와 겹치면 안된다. (TEXT가 같으면, Hash 값도 같아지므로 구분이 안 됨.)
+
+ //================================================================================================================	
+
+USceneComponent는 attachment를 지원하며, Actor의 RootComponent 외 생성되는 모든 USceneComponent들은 모두 RootComponent에 attach 시켜야 한다. Pawn의 기준에서 흔히 RootComponent에 attach 되는 USceneComponent들은 다음과 같다.
+USkeletalMeshComponent : Animated SkeletalMesh 애셋 인스턴스 생성
+UArrowComponent : Actor가 어느 방향을 바라보는지 참조하기 위한 시각정보 제공
+USpringArmComponent : 주로 카메라 부착시 사용되며, 카메라가 이동하면서 유연한 느낌을 내기 위해 사용
+UCameraComponent : Actor에 부착할 카메라

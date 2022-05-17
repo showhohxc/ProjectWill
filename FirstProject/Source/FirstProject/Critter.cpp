@@ -5,6 +5,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
+#include "ColliderMovementComponent.h"
 
 // Sets default values
 ACritter::ACritter()
@@ -26,6 +27,9 @@ ACritter::ACritter()
 	//AutoPossessPlayer = EAutoReceiveInput::Player0;
 	CurrentVelocity = FVector(0);
 	fMaxSpeed = 100.0f;
+
+	OurMovementComponent = CreateDefaultSubobject<UColliderMovementComponent>(TEXT("OurMovementComponent"));
+	OurMovementComponent->UpdatedComponent = RootComponent;
 }
 
 // Called when the game starts or when spawned
@@ -56,12 +60,26 @@ void ACritter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ACritter::MoveForward(float value)
 {
-	CurrentVelocity.Y = FMath::Clamp(value, -1.f, 1.f) * fMaxSpeed;
+	//CurrentVelocity.Y = FMath::Clamp(value, -1.f, 1.f) * fMaxSpeed;
+
+	FVector fForward = GetActorForwardVector();
+
+	if (OurMovementComponent)
+	{
+		OurMovementComponent->AddInputVector(fForward * value);
+	}
 }
 
 void ACritter::MoveRight(float value)
 {
-	CurrentVelocity.X = FMath::Clamp(value, -1.f, 1.f) * fMaxSpeed;
+	//CurrentVelocity.X = FMath::Clamp(value, -1.f, 1.f) * fMaxSpeed;
+
+	FVector fRight = GetActorRightVector();
+
+	if (OurMovementComponent)
+	{
+		OurMovementComponent->AddInputVector(fRight * value);
+	}
 }
 
 void ACritter::MousePitch(float AxValue)
@@ -73,4 +91,9 @@ void ACritter::MouseYaw(float AxValue)
 {
 
 }
+
+//UPawnMovementComponent* ACritter::GetMovementComponent() const
+//{
+//	return OurMovementComponent;
+//}
 

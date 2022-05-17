@@ -51,7 +51,7 @@ ACollider::ACollider()
 	m_Camera->SetupAttachment(m_SpringArm, USpringArmComponent::SocketName);
 
 	OurMovementComponent = CreateDefaultSubobject<UColliderMovementComponent>(TEXT("OurMovementComponent"));
-	OurMovementComponent->UpdatedComponent = RootComponent;		// OurMovementComponent는 루트컴포넌트를 제어한다
+	OurMovementComponent->UpdatedComponent = RootComponent;		// OurMovementComponent는 루트컴포넌트를 제어한다. 우리의 움직임 구성요소가 움직임을 적용해야할때 적용
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshComponentAsset(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_Sphere.Shape_Sphere'"));
 	
@@ -118,7 +118,7 @@ void ACollider::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void ACollider::MoveForward(float value)
 {
 	FVector fForward = GetActorForwardVector();
-	//AddMovementInput(value * fForward);
+	//AddMovementInput(value * fForward);	Pawn의 이동구성요소
 
 	if (OurMovementComponent)
 	{
