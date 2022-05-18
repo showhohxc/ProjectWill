@@ -18,14 +18,18 @@ AMain::AMain()
 
 	m_CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	m_CameraBoom->SetupAttachment(GetRootComponent());
-	m_CameraBoom->TargetArmLength = 600.f;	// 카메라와 플레이어 거리
+	m_CameraBoom->TargetArmLength = 400.f;	// 카메라와 플레이어 거리
 	m_CameraBoom->bUsePawnControlRotation = true;	// 컨트롤러 기반 팔 회전
 
 	GetCapsuleComponent()->SetCapsuleSize(48.f, 80.f);
 
 	// Create Folow Camera
 	m_FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
-	m_FollowCamera->SetupAttachment(m_CameraBoom, USpringArmComponent::SocketName);
+	m_FollowCamera->SetupAttachment(m_CameraBoom, USpringArmComponent::SocketName);	
+
+	//m_FollowCamera->SetRelativeLocation(FVector(-100, 0, 300));
+	//m_FollowCamera->SetRelativeRotation(FRotator(-45, 0, 0));
+
 	m_FollowCamera->bUsePawnControlRotation = false;
 
 	// Set Our TurnRate Trun

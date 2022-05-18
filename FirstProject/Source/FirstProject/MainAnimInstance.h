@@ -22,6 +22,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = AnimationsProperties)
 	void BeginPlayAnimationProperties();
 
+	//UFUNCTION(BlueprintPure, Category = "Charater Speed")
+	//	float GetCharacterSpeed(float fValue)
+	//{
+	//	return m_fMoveMentSpeed + fValue;
+	//}
+
 	UFUNCTION(BlueprintCallable, Category = AnimationsProperties)
 	void UpdateAnimationProperties();
 
@@ -33,5 +39,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Movement)
 	class APawn* m_Pawn;
+
+
 
 };
