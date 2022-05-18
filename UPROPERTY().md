@@ -1,0 +1,92 @@
+
+# UPROPERTY()
+
+![image](https://user-images.githubusercontent.com/98040028/168943222-53b1686f-4ec6-44d0-acd1-9d4277a5feee.png)
+
+
+UPROPERTY()는 변수에 붙는 리플렉션 매크로, 위 코드 처럼 UPROPERTY() 메크로에 인자 값을 넣어서 용도에 맞게 활용
+
+# 1. 변수 공개 & 수정 권한
+![image](https://user-images.githubusercontent.com/98040028/168943524-286b03bb-4a14-4736-8a26-c5e28c765b12.png)
+맨 앞에 넣는 값
+
+VisibleDefaultsOnly  
+VisibleInstanceOnly  
+VisibleAnywhere
+
+EditDefulatOnly  
+EditInstanceOnly  
+EditAnywhere
+
+![image](https://user-images.githubusercontent.com/98040028/168943628-c602866e-c382-492c-a3a7-94cd3bf4d694.png)
+    	                         	                                                
+# DefaultsOnly  
+(Edit)블루프린트 에디터 창의 디테일 패널에서 값을 수정 가능  
+(Visible)블루프린트 에디터 창의 디테일 패널에서 값을 보기 가능
+# InstanceOnly  
+(Edit)월드상에 배치된 오브젝트의 디테일 패널에서 값을 수정 가능  
+(Visible)월드상에 배치된 오브젝트의 디테일 패널에서 값을 보기 가능
+# Anywhere  
+(Edit)블루프린트 에디터 & 월드상에 배치된 오브젝트의 디테일 패널에서 값을 수정 가능  
+(Visible)블루프린트 에디터 & 월드상에 배치된 오브젝트의 디테일 패널에서 값을 보기 가능
+
+# - Visible, Edit의 차이
+![image](https://user-images.githubusercontent.com/98040028/168944399-045b7f14-29db-4ba4-99c4-6b4bf067acd7.png)
+
+# DefaultsOnly, InstanceOnly, Anywhere의 차이
+![image](https://user-images.githubusercontent.com/98040028/168944565-ff4c737c-03bf-4678-ac45-ba59462c7074.png)
+DefaultsOnly는 위 사진 처럼 블루프린트 에디터에서 값을 볼수 있다.
+![image](https://user-images.githubusercontent.com/98040028/168944617-d9758a78-897e-44df-b34b-2ab3b2baf6d3.png)
+InstanceOnly는 월드에 배치된 오브젝트의 디테일 패널에서 값을 볼 수 있다.
+
+Anywhere 블루프린트 에디터 월드 둘다 볼수 있다.
+
+# - 포인터 변수 사용시 
+![image](https://user-images.githubusercontent.com/98040028/168944931-f38018df-b593-4342-9bb3-6453cf73180b.png)
+포인터 변수를 만들어 놓고 수정하고 싶다고 Edit를 사용하면 위 처럼 의도하지 않은 결과가 나오게 되는데  
+원인은 해당 클래스를 수정하는 것이 아닌 포인터 변수의 참조를 수정하게 되기 때문에 위 처럼 참조를 변경하는 메뉴 뜨게 된다.
+![image](https://user-images.githubusercontent.com/98040028/168945026-60cfd919-b87f-4b8f-b149-5bf74386ebe9.png)
+Visible로 변경시 StaticMesh 클래스의 정보를 수정이 가능하게 된다.
+
+# 2. 블루프린트 공개 & 수정 권한
+![image](https://user-images.githubusercontent.com/98040028/168945151-db117837-4aba-48d4-90a2-32a54d89bcdd.png)
+블루프린트와 직접 연관
+
+BlueprintReadOnly	블루프린트에서 해당 변수를 읽기가 가능합니다.  
+BlueprintReadWrite	블루프린트에서 해당 변수를 읽기 & 쓰기가 가능합니다.  
+BlueprintGetter	해당 변수에 접근 할 수 있는 함수를 지정하고 블루프린트는 해당 함수를 통해 변수에 접근합니다.  
+BlueprintSetter	해당 변수에 수정 할 수 있는 함수를 지정하고 블루프린트는 해당 함수를 통해 변수에 수정합니다.
+
+![image](https://user-images.githubusercontent.com/98040028/168945211-1979769f-19fc-4273-97aa-04d59e72f002.png)
+ReadOnly or ReadWrite를 사용시 블루프린트 에디터 변수 패널에 변수를 확인이 가능하다.
+![image](https://user-images.githubusercontent.com/98040028/168945318-86e7f8cc-f974-4f57-9e80-e8075a0ac135.png)
+변수 표시 체크시 변수 확인 가능
+
+# - BlueprintReadOnly & BlueprintReadWrite
+![image](https://user-images.githubusercontent.com/98040028/168945383-196f8de5-aaf8-47d9-98ff-1bb12ace2d02.png)
+ReadOnly와 ReadWrite는 단순하게 블루프린트 내에ㅐ서 해당 변수를 Get만 가능하나 Get & Set 둘다 가능하냐 차이 이다.
+# - BlueprintGetter & Setter
+	UPROPERTY(EditAnywhere, BlueprintGetter = GetTestValueGS, BlueprintSetter = SetTestValueGS)
+		float m_TestValue_GS = 3.0f;
+
+	UFUNCTION(BlueprintGetter)
+		float GetTestValueGS()
+	{
+		return m_TestValue_GS + 20.0f;
+	}
+
+	UFUNCTION(BlueprintSetter)
+	void SetTestValueGS(float fValue)
+	{
+		m_TestValue_GS += fValue + 100.0f;
+	}
+
+C#의 Gettset & Setter와 같은 기능을 가졌으며 간단히 말하면 Get, Set을 커스텀 함수로 만들어 사용이 가능하다  
+특이 사항은 Settter함수를 사용 할 떄 자동으로 Getter함수까지 호출
+
+# Category
+![image](https://user-images.githubusercontent.com/98040028/168945687-05e8d18c-5a66-4365-9d61-ba97af54fe87.png)
+Category는 위 처럼 디테일 패널의 항목이름을 명칭이가능
+![image](https://user-images.githubusercontent.com/98040028/168945689-29135101-2b9a-4624-bcc6-dfe1404209be.png)
+
+
