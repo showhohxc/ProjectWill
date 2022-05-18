@@ -37,7 +37,7 @@ void UMainAnimInstance::UpdateAnimationProperties()
 
 		m_bIsInAir = m_Pawn->GetMovementComponent()->IsFalling();
 
-		UE_LOG(LogTemp, Warning, TEXT("JUMP State : %s"), m_bIsInAir ? TEXT("TRUE") : TEXT("FALSE") );
+		//UE_LOG(LogTemp, Warning, TEXT("JUMP State : %s"), m_bIsInAir ? TEXT("TRUE") : TEXT("FALSE") );
 	}
 }
  

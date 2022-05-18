@@ -15,6 +15,15 @@ public:
 	// Sets default values for this actor's properties
 	AFloor();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Floor Switch")
+		class UBoxComponent* m_pTriggerBox;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Floor Switch")
+		class UStaticMeshComponent* m_pFloorSwitch;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Floor Switch")
+		class UStaticMeshComponent* m_pDoor;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -22,5 +31,11 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 };
