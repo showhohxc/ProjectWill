@@ -25,6 +25,8 @@ AFloor::AFloor()
 
 	m_pDoor= CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Door"));
 	m_pDoor->SetupAttachment(GetRootComponent());
+
+
 }
 
 // Called when the game starts or when spawned
@@ -34,6 +36,10 @@ void AFloor::BeginPlay()
 	
 	m_pTriggerBox->OnComponentBeginOverlap.AddDynamic(this, &AFloor::OnOverlapBegin);
 	m_pTriggerBox->OnComponentEndOverlap.AddDynamic(this, &AFloor::OnOverlapEnd);
+
+	vec_InitDoorLocation = m_pDoor->GetComponentLocation();
+	vec_InitFloorLocation = m_pFloorSwitch->GetComponentLocation();
+	UE_LOG(LogTemp, Warning, TEXT("vec_InitDoorLocation %f %f %f"), vec_InitDoorLocation.X, vec_InitDoorLocation.Y, vec_InitDoorLocation.Z);
 }
 
 // Called every frame
@@ -46,9 +52,29 @@ void AFloor::Tick(float DeltaTime)
 void AFloor::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Overlap Begin."));
+	RaiseDoor();
+	LowerFloorSwitch();
 }
 
 void AFloor::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Overlap End."));
+	LowerDoor();
+	RaiseFloorSwitch();
+}
+
+void AFloor::UpdateDoorLocation(float z)
+{
+	FVector NewLocation = vec_InitDoorLocation;
+	NewLocation.Z += z;
+	m_pDoor->SetWorldLocation(NewLocation);
+	//UE_LOG(LogTemp, Warning, TEXT("vec_InitDoorLocation %f %f %f"),  NewLocation.X, NewLocation.Y, NewLocation.Z);
+}
+
+void AFloor::UpdateFloorSwitchLocation(float z)
+{
+	FVector NewLocation = vec_InitFloorLocation;
+	NewLocation.Z += z;
+	m_pFloorSwitch->SetWorldLocation(NewLocation);
+	//UE_LOG(LogTemp, Warning, TEXT("vec_InitFloorLocation %f %f %f"), NewLocation.X, NewLocation.Y, NewLocation.Z);
 }
