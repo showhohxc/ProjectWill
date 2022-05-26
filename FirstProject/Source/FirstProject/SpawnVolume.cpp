@@ -36,7 +36,7 @@ FVector ASpawnVolume::GetSpawnPoint()
 	FVector point = UKismetMathLibrary::RandomPointInBoundingBox(origin, Extent); 
 	return point;
 }
-
+	
 void ASpawnVolume::SpawnOurPawn_Implementation(UClass* ToSpawn, const FVector& Location)
 {
 	if (ToSpawn)
