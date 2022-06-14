@@ -45,6 +45,15 @@ AMain::AMain()
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 540.f, 0.f);	// 캐릭터 회전 속도
 	GetCharacterMovement()->JumpZVelocity = 650.f;
 	GetCharacterMovement()->AirControl = .2f;//공중 제어
+
+
+
+
+	fMaxHealth = 100.0f;
+	fHealth = 65.0f;
+	fMaxStanmina = 350.0f;
+	fStanmina = 120.0f;
+	nCoins = 0;
 }
 
 // Called when the game starts or when spawned
