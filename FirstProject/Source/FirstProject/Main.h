@@ -35,15 +35,15 @@ public:
 
 
 	// Character Stats
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category ="Player Stats")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="Player Stats")
 	float fMaxHealth;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Player Stats")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
 	float fHealth;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Player Stats")
-	float fMaxStanmina;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Player Stats")
-	float fStanmina; 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Player Stats")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+	float fMaxStamina;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+	float fStamina; 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
 	int nCoins;
 
 

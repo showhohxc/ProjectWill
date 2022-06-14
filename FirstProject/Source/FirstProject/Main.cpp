@@ -51,8 +51,8 @@ AMain::AMain()
 
 	fMaxHealth = 100.0f;
 	fHealth = 65.0f;
-	fMaxStanmina = 350.0f;
-	fStanmina = 120.0f;
+	fMaxStamina = 350.0f;
+	fStamina = 120.0f;
 	nCoins = 0;
 }
 
