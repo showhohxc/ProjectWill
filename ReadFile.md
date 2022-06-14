@@ -6,3 +6,6 @@
 # x축으로 이동하지만
 ![img1 daumcdn](https://user-images.githubusercontent.com/98040028/168024853-2adc9fb2-8a45-409f-bebb-f3003e510256.png)
 # 이러한 방식으로 오브젝트를 돌려놓았을 경우 AddActorWorldOffset는 우측으로 200 AddActorLocalOffset 위로 200만큼 이동하게 된다.
+
+
+# TSubclassOf<class CLASS> // 일반 Class 보다 안정선이 확보된 TSubclassof가 안전성이 높다.
