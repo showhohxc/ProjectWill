@@ -3,6 +3,7 @@
 
 #include "MainAnimInstance.h"
 #include "GameFramework/PawnMovementComponent.h"
+#include "Main.h"
 //#include "GameFramework/CharacterMovementComponent.h"
 
 void UMainAnimInstance::NativeInitializeAnimation()
@@ -12,6 +13,11 @@ void UMainAnimInstance::NativeInitializeAnimation()
 	if (m_Pawn == nullptr)
 	{
 		m_Pawn = TryGetPawnOwner();
+
+		if (m_Pawn)
+		{
+			m_Main = Cast<AMain>(m_Pawn);
+		}
 	}
 }
 
@@ -36,6 +42,11 @@ void UMainAnimInstance::UpdateAnimationProperties()
 		m_fMoveMentSpeed = LaterlaSpeed.Size();
 
 		m_bIsInAir = m_Pawn->GetMovementComponent()->IsFalling();
+
+		if (m_Main == nullptr)
+		{
+			m_Main = Cast<AMain>(m_Pawn);
+		}
 
 		//UE_LOG(LogTemp, Warning, TEXT("JUMP State : %s"), m_bIsInAir ? TEXT("TRUE") : TEXT("FALSE") );
 	}

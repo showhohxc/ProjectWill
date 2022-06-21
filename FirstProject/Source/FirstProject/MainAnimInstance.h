@@ -40,6 +40,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Movement)
 	class APawn* m_Pawn;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Movement)
+		class AMain* m_Main;
 
 
 };

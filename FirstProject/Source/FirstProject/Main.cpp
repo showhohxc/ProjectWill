@@ -54,6 +54,11 @@ AMain::AMain()
 	fMaxStamina = 350.0f;
 	fStamina = 120.0f;
 	nCoins = 0;
+
+	fRunningSpeed = 650.0f;
+	fSprintingSpeed = 950.0f;
+
+	bShiftKeyDown = false;
 }
 
 // Called when the game starts or when spawned
@@ -78,6 +83,10 @@ void AMain::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+
+	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &AMain::ShiftKeyDown);
+	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &AMain::ShiftKeyUp);
+
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AMain::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AMain::MoveRight);
@@ -137,4 +146,51 @@ void AMain::TurnAtRate(float rate)
 void AMain::LookUpAtRate(float rate)
 {
 	AddControllerPitchInput(rate * m_fBaseLookUpRate * GetWorld()->GetDeltaSeconds());
+}
+
+void AMain::DecrementHealth(float amount)
+{
+	if (fHealth - amount <= 0.0f)
+	{
+		fHealth -= amount;
+		Die();
+	}
+	else
+	{
+		fHealth -= amount;
+	}
+}
+
+void AMain::IncrementCoins(int32 amount)
+{
+	nCoins += amount;
+}
+
+void AMain::Die()
+{
+
+}
+
+void AMain::SetMovementStatus(EMovementStatus Status)
+{
+	MovemoentStatus = Status;
+
+	if (MovemoentStatus == EMovementStatus::EMS_SPRINTING)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = fSprintingSpeed;
+	}
+	else
+	{
+		GetCharacterMovement()->MaxWalkSpeed = fRunningSpeed;
+	}
+}
+
+void AMain::ShiftKeyDown()
+{
+	bShiftKeyDown = true;
+}
+
+void AMain::ShiftKeyUp()
+{
+	bShiftKeyDown = false;
 }

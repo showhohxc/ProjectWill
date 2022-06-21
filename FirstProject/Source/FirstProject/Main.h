@@ -6,6 +6,15 @@
 #include "GameFramework/Character.h"
 #include "Main.generated.h"
 
+UENUM(BlueprintType)
+enum class EMovementStatus : uint8
+{
+	EMS_NORMAL UMETA(DisplayName = "Normal"),
+	EMS_SPRINTING UMETA(DisplaName = "Sprinting"),
+
+	EMS_max UMETA(DisplaName = "max"),
+};
+
 UCLASS()
 class FIRSTPROJECT_API AMain : public ACharacter
 {
@@ -14,6 +23,23 @@ class FIRSTPROJECT_API AMain : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AMain();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Enums")
+	EMovementStatus MovemoentStatus;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Running")
+		float fRunningSpeed;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Running")
+		float fSprintingSpeed;
+
+	bool bShiftKeyDown;
+
+	void ShiftKeyDown();
+	void ShiftKeyUp();
+
+	// Set Movemnt Status and Running Speed
+	void SetMovementStatus(EMovementStatus Status);
+
 
 	/*
 		Camera Boom positioning the camera
@@ -46,7 +72,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
 	int nCoins;
 
+	void DecrementHealth(float amount);
 
+	void IncrementCoins(int32 amount);
+
+	void Die();
 
 
 
