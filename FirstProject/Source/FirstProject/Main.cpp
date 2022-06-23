@@ -51,7 +51,7 @@ AMain::AMain()
 
 	fMaxHealth = 100.0f;
 	fHealth = 65.0f;
-	fMaxStamina = 350.0f;
+	fMaxStamina = 150.0f;
 	fStamina = 120.0f;
 	nCoins = 0;
 
@@ -59,6 +59,13 @@ AMain::AMain()
 	fSprintingSpeed = 950.0f;
 
 	bShiftKeyDown = false;
+
+	//init Enums
+	MovemoentStatus = EMovementStatus::EMS_NORMAL;
+	StaminaStatus = EStaminaStatus::ESS_NORMAL;
+
+	fStaminaDrainRate = 25.f;
+	fMinSprintStamina = 50.0f;
 }
 
 // Called when the game starts or when spawned
@@ -73,7 +80,110 @@ void AMain::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	float DeltaStamina = fStaminaDrainRate * DeltaTime;
+	
+	switch (StaminaStatus)
+	{
+	case EStaminaStatus::ESS_NORMAL:
+		{
+			if (bShiftKeyDown)
+			{
+				if (fStamina - DeltaStamina <= fMinSprintStamina)
+				{
+					SetStaminaStatus(EStaminaStatus::ESS_BELOWMINIUM);
+					fStamina -= DeltaStamina;
+				}
+				else
+				{
+					fStamina -= DeltaStamina;
+				}
+
+				SetMovementStatus(EMovementStatus::EMS_SPRINTING);
+			}
+			else
+			{
+				// Shift Up
+				if (fStamina + DeltaStamina >= fMaxStamina)
+				{
+					fStamina = fMaxStamina;
+				}
+				else
+				{
+					fStamina += DeltaStamina;
+				}
+
+				SetMovementStatus(EMovementStatus::EMS_NORMAL);
+			}
+
+		} break;
+
+		case EStaminaStatus::ESS_BELOWMINIUM:
+		{
+			if (bShiftKeyDown)
+			{
+				if (fStamina - DeltaStamina <= 0.0f)
+				{
+					SetStaminaStatus(EStaminaStatus::ESS_EXHAUSTED);
+					fStamina = 0;
+					SetMovementStatus(EMovementStatus::EMS_NORMAL);
+				}
+				else
+				{
+					fStamina -= DeltaStamina;
+					SetMovementStatus(EMovementStatus::EMS_SPRINTING);
+				}
+			}
+			else
+			{
+				// Shift up
+				if (fStamina + DeltaStamina >= fMinSprintStamina)
+				{
+					SetStaminaStatus(EStaminaStatus::ESS_NORMAL);
+					fStamina += DeltaStamina;
+				}
+				else
+				{
+					fStamina += DeltaStamina;
+				}
+
+				SetMovementStatus(EMovementStatus::EMS_NORMAL);
+			}
+		} break;
+
+		case EStaminaStatus::ESS_EXHAUSTED:
+		{
+			if (bShiftKeyDown)
+			{
+				fStamina = 0.0f;
+			}
+			else
+			{
+				SetStaminaStatus(EStaminaStatus::ESS_EXHAUSTEDRECOVERING);
+				fStamina += DeltaStamina;
+			}
+
+			SetMovementStatus(EMovementStatus::EMS_NORMAL);
+		} break;
+
+		case EStaminaStatus::ESS_EXHAUSTEDRECOVERING:
+		{
+			if (fStamina + DeltaStamina >= fMinSprintStamina)\
+			{
+				SetStaminaStatus(EStaminaStatus::ESS_NORMAL);
+				fStamina += DeltaStamina;
+			}
+			else
+			{
+				fStamina += DeltaStamina;
+			}
+
+			SetMovementStatus(EMovementStatus::EMS_NORMAL);
+		} break;
+
+		default:;
+	}
 }
+
 
 // Called to bind functionality to input
 void AMain::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
