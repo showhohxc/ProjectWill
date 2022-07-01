@@ -223,6 +223,8 @@ void AMain::MoveForward(float value)
 		// 회전값을 행렬로 변환 -> 절대축 기준 회전값 가져오기 : X축 기준으로 얼마나 회전되었는지 계산
 		AddMovementInput(Dir, value);
 		
+		UE_LOG(LogTemp, Warning, TEXT("MoveForward State : %f"), value);
+
 		//FVector fForward = GetActorForwardVector();
 		//AddMovementInput(fForward, value);
 	}
@@ -240,7 +242,7 @@ void AMain::MoveRight(float value)
 		const FVector Dir = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);		
 		// 회전값을 행렬로 변환 -> 절대축 기준 회전값 가져오기 : Y축 기준으로 얼마나 회전되었는지 계산
 		AddMovementInput(Dir, value);
-
+			
 		/*FVector fRight = GetActorRightVector();
 		AddMovementInput(fRight, value);*/
 	}
