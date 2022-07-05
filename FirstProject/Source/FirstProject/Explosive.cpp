@@ -30,6 +30,8 @@ void AExplosive:: OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 		if (main)
 		{
 			main->DecrementHealth(fDamage);
+
+			Destroy();
 		}
 	}
 ;}

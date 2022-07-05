@@ -41,6 +41,8 @@ void UMainAnimInstance::UpdateAnimationProperties()
 		FVector LaterlaSpeed = FVector(Speed.X, Speed.Y, 0.f);
 		m_fMoveMentSpeed = LaterlaSpeed.Size();
 
+		UE_LOG(LogTemp, Warning, TEXT("Character Speed : %f "), m_fMoveMentSpeed);
+
 		m_bIsInAir = m_Pawn->GetMovementComponent()->IsFalling();
 
 		if (m_Main == nullptr)

@@ -36,6 +36,13 @@ public:
 	// Sets default values for this character's properties
 	AMain();
 
+	TArray<FVector> PickupLocations;
+
+
+
+	UFUNCTION(BlueprintCallable)
+	void ShowPickupLocations();
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Enums")
 	EMovementStatus MovemoentStatus;
 
@@ -58,6 +65,11 @@ public:
 
 	void ShiftKeyDown();
 	void ShiftKeyUp();
+
+
+	bool bLMBDown;
+	void LMBDown();
+	void LMBUp();
 
 	// Set Movemnt Status and Running Speed
 	void SetMovementStatus(EMovementStatus Status);
@@ -129,4 +141,15 @@ public:
 	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return m_CameraBoom; }
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return m_FollowCamera; }
 
+
+
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Items)
+		class AWeapon* m_EquippedWeapon;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Items)
+	class AItem* ActiveOverlappingItem;
+
+	FORCEINLINE void SetEquippedWeapon(AWeapon* WeaponToSet) { m_EquippedWeapon = WeaponToSet; }
+	FORCEINLINE void SetActiveOverlappingItem(AItem* Item) { ActiveOverlappingItem = Item; }
 };

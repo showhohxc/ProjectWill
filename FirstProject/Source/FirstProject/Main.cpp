@@ -9,6 +9,8 @@
 #include "Components/InputComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "Weapon.h"
 
 // Sets default values
 AMain::AMain()
@@ -43,7 +45,7 @@ AMain::AMain()
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;  // 입력방향으로 캐릭터 이동
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 540.f, 0.f);	// 캐릭터 회전 속도
-	GetCharacterMovement()->JumpZVelocity = 650.f;
+	GetCharacterMovement()->JumpZVelocity = 450.f;
 	GetCharacterMovement()->AirControl = .2f;//공중 제어
 
 
@@ -55,10 +57,12 @@ AMain::AMain()
 	fStamina = 120.0f;
 	nCoins = 0;
 
-	fRunningSpeed = 650.0f;
+	fRunningSpeed = 250.0f;
 	fSprintingSpeed = 950.0f;
 
 	bShiftKeyDown = false;
+
+	bLMBDown = false;
 
 	//init Enums
 	MovemoentStatus = EMovementStatus::EMS_NORMAL;
@@ -72,6 +76,7 @@ AMain::AMain()
 void AMain::BeginPlay()
 {
 	Super::BeginPlay();
+	
 	
 }
 
@@ -197,6 +202,9 @@ void AMain::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &AMain::ShiftKeyDown);
 	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &AMain::ShiftKeyUp);
 
+	PlayerInputComponent->BindAction("LMB", IE_Pressed, this, &AMain::LMBDown);
+	PlayerInputComponent->BindAction("LMB", IE_Released, this, &AMain::LMBUp);
+
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AMain::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AMain::MoveRight);
@@ -260,6 +268,28 @@ void AMain::LookUpAtRate(float rate)
 	AddControllerPitchInput(rate * m_fBaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
 
+void AMain::LMBDown()
+{
+	bLMBDown = true;
+
+	if (ActiveOverlappingItem)
+	{
+		AWeapon* Weapon = Cast<AWeapon>(ActiveOverlappingItem);
+
+		if (Weapon)
+		{
+			Weapon->Equip(this);
+			SetActiveOverlappingItem(nullptr);
+		}
+	}
+}
+
+void AMain::LMBUp()
+{
+	bLMBDown = false;
+}
+
+
 void AMain::DecrementHealth(float amount)
 {
 	if (fHealth - amount <= 0.0f)
@@ -305,4 +335,22 @@ void AMain::ShiftKeyDown()
 void AMain::ShiftKeyUp()
 {
 	bShiftKeyDown = false;
+}
+
+void AMain::ShowPickupLocations()
+{
+	//for (int i = 0; i < PickupLocations.Num(); ++i)
+	//{
+	//	UKismetSystemLibrary::DrawDebugSphere(this, PickupLocations[i], 25.f, 8, FLinearColor::Green, 15.f, .25f);
+	//}	
+
+	/*for (auto Location : PickupLocations)
+	{
+		UKismetSystemLibrary::DrawDebugSphere(this, Location, 25.f, 8, FLinearColor::Green, 15.f, .25f);
+	}*/
+
+	for (FVector Location : PickupLocations)
+	{
+		UKismetSystemLibrary::DrawDebugSphere(this, Location, 25.f, 8, FLinearColor::Green, 15.f, .25f);
+	}
 }
