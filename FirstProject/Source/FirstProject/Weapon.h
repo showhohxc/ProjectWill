@@ -9,6 +9,16 @@
 /**
  * 
  */
+
+UENUM(BlueprintType)
+enum class EWeaponState : uint8
+{
+	EMS_PICKUP UMETA(DisplayName = "Pickup"),
+	EMS_EQUIPPED UMETA(DisplaName = "Equip"),
+
+	EMS_MAX UMETA(DisplaName = "max"),
+};
+
 UCLASS()
 class FIRSTPROJECT_API AWeapon : public AItem
 {
@@ -16,6 +26,8 @@ class FIRSTPROJECT_API AWeapon : public AItem
 	
 public:
 	AWeapon();
+
+	EWeaponState m_WeaponState;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item | Particle")
 		bool bWeaponParticle;
@@ -30,4 +42,7 @@ public:
 	virtual void OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) override;
 
 	void Equip(class AMain* Char);
+
+	FORCEINLINE void SetWeaponState(EWeaponState weaponstate) { m_WeaponState = weaponstate; }
+	FORCEINLINE EWeaponState GetWeaponState() { return m_WeaponState; }
 };

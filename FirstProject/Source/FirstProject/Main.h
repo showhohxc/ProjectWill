@@ -46,6 +46,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Enums")
 	EMovementStatus MovemoentStatus;
 
+	// Set Movemnt Status and Running Speed
+	void SetMovementStatus(EMovementStatus Status);
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Enums")
 	EStaminaStatus StaminaStatus;
 
@@ -70,9 +73,6 @@ public:
 	bool bLMBDown;
 	void LMBDown();
 	void LMBUp();
-
-	// Set Movemnt Status and Running Speed
-	void SetMovementStatus(EMovementStatus Status);
 
 
 	/*

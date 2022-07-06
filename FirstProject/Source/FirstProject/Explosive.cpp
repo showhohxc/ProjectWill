@@ -34,7 +34,7 @@ void AExplosive:: OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 			Destroy();
 		}
 	}
-;}
+}
 
 void AExplosive::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
