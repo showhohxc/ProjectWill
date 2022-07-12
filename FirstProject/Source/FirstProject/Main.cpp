@@ -11,6 +11,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Weapon.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Animation/AnimInstance.h"
 
 // Sets default values
 AMain::AMain()
@@ -57,7 +59,7 @@ AMain::AMain()
 	fStamina = 120.0f;
 	nCoins = 0;
 
-	fRunningSpeed = 250.0f;
+	fRunningSpeed = 340.0f;
 	fSprintingSpeed = 950.0f;
 
 	bShiftKeyDown = false;
@@ -70,6 +72,8 @@ AMain::AMain()
 
 	fStaminaDrainRate = 25.f;
 	fMinSprintStamina = 50.0f;
+
+	bAttacking = false;
 }
 
 // Called when the game starts or when spawned
@@ -220,7 +224,7 @@ void AMain::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AMain::MoveForward(float value)
 {
-	if (Controller != nullptr && value != 0.f)
+	if (Controller != nullptr && value != 0.f && (!bAttacking))
 	{
 		// 캐릭터의 앞방향 위치를 찾는다.
 		const FRotator Rot = Controller->GetControlRotation();		// 절대축 기준 회전값
@@ -231,7 +235,7 @@ void AMain::MoveForward(float value)
 		// 회전값을 행렬로 변환 -> 절대축 기준 회전값 가져오기 : X축 기준으로 얼마나 회전되었는지 계산
 		AddMovementInput(Dir, value);
 		
-		UE_LOG(LogTemp, Warning, TEXT("MoveForward State : %f"), value);
+		//UE_LOG(LogTemp, Warning, TEXT("MoveForward State : %f"), value);
 
 		//FVector fForward = GetActorForwardVector();
 		//AddMovementInput(fForward, value);
@@ -281,6 +285,10 @@ void AMain::LMBDown()
 			Weapon->Equip(this);
 			SetActiveOverlappingItem(nullptr);
 		}
+	}
+	else if(m_EquippedWeapon)	// 무기를 가지고 있다면
+	{
+		Attack();
 	}
 }
 
@@ -352,5 +360,54 @@ void AMain::ShowPickupLocations()
 	for (FVector Location : PickupLocations)
 	{
 		UKismetSystemLibrary::DrawDebugSphere(this, Location, 25.f, 8, FLinearColor::Green, 15.f, .25f);
+	}
+}
+
+void AMain::SetEquippedWeapon(AWeapon* WeaponToSet)
+{
+	if (m_EquippedWeapon)
+	{
+		m_EquippedWeapon->Destroy();
+	}
+
+	m_EquippedWeapon = WeaponToSet;
+}
+
+void AMain::Attack()
+{
+	if (!bAttacking)
+	{
+		bAttacking = true;
+
+		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+
+		if (AnimInstance && CombatMontage)
+		{
+			int nSelection = FMath::RandRange(0, 1);
+			
+			switch (nSelection)
+			{
+				case 0:
+				{
+					AnimInstance->Montage_Play(CombatMontage, 2.3f);		// 값이 낮을수록 느리게
+					AnimInstance->Montage_JumpToSection(FName("Attack_1"), CombatMontage);
+				} break;
+				case 1:
+				{
+					AnimInstance->Montage_Play(CombatMontage, 1.8f);
+					AnimInstance->Montage_JumpToSection(FName("Attack_2"), CombatMontage);
+				} break;
+			}
+		}
+	}
+}
+
+void AMain::AttackEnd()
+{
+	bAttacking = false;
+
+	if (bLMBDown)
+	{
+		Attack();
 	}
 }

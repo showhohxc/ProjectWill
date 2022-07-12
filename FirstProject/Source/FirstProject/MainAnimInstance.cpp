@@ -4,6 +4,7 @@
 #include "MainAnimInstance.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "Main.h"
+#include "Enemy.h"
 //#include "GameFramework/CharacterMovementComponent.h"
 
 void UMainAnimInstance::NativeInitializeAnimation()
@@ -41,7 +42,7 @@ void UMainAnimInstance::UpdateAnimationProperties()
 		FVector LaterlaSpeed = FVector(Speed.X, Speed.Y, 0.f);
 		m_fMoveMentSpeed = LaterlaSpeed.Size();
 
-		UE_LOG(LogTemp, Warning, TEXT("Character Speed : %f "), m_fMoveMentSpeed);
+		//UE_LOG(LogTemp, Warning, TEXT("Character Speed : %f "), m_fMoveMentSpeed);
 
 		m_bIsInAir = m_Pawn->GetMovementComponent()->IsFalling();
 
