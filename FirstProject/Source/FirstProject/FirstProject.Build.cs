@@ -6,6 +6,13 @@ public class FirstProject : ModuleRules
 {
 	public FirstProject(ReadOnlyTargetRules Target) : base(Target)
 	{
+		//MinFilesUsingPrecompiledHeader = 1;
+		//#if UE_4_24_OR_LATER
+		//	bUseUnity = false; // 4.24부터 바뀐 변수
+		//#endif
+		//	bFasterWithoutUnity = true; // 4.24 이전 버전#endif
+
+
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG", "AIModule" });

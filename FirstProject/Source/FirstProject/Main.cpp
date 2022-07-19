@@ -13,6 +13,8 @@
 #include "Weapon.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Animation/AnimInstance.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 // Sets default values
 AMain::AMain()
@@ -398,6 +400,11 @@ void AMain::Attack()
 					AnimInstance->Montage_JumpToSection(FName("Attack_2"), CombatMontage);
 				} break;
 			}
+		}
+
+		if (m_EquippedWeapon->SwingSound)
+		{
+			UGameplayStatics::PlaySound2D(this, m_EquippedWeapon->SwingSound);
 		}
 	}
 }
