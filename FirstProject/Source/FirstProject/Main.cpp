@@ -404,7 +404,7 @@ void AMain::Attack()
 
 		if (m_EquippedWeapon->SwingSound)
 		{
-			UGameplayStatics::PlaySound2D(this, m_EquippedWeapon->SwingSound);
+			//UGameplayStatics::PlaySound2D(this, m_EquippedWeapon->SwingSound);
 		}
 	}
 }
@@ -417,4 +417,10 @@ void AMain::AttackEnd()
 	{
 		Attack();
 	}
+}
+
+void AMain::PlaySwingSound()
+{
+	if(m_EquippedWeapon->SwingSound)
+		UGameplayStatics::PlaySound2D(this, m_EquippedWeapon->SwingSound);
 }
