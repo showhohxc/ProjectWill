@@ -11,9 +11,11 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Weapon.h"
+#include "Enemy.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Animation/AnimInstance.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Sound/SoundCue.h"
 
 // Sets default values
@@ -76,6 +78,9 @@ AMain::AMain()
 	fMinSprintStamina = 50.0f;
 
 	bAttacking = false;
+
+	fInterSpeed = 15.0f;
+	bInterToEnemy = false;
 }
 
 // Called when the game starts or when spawned
@@ -193,8 +198,22 @@ void AMain::Tick(float DeltaTime)
 
 		default:;
 	}
+
+	if (bInterToEnemy && CombatTarget)
+	{
+		FRotator LookAtYaw = GetLookAtRotationYaw(CombatTarget->GetActorLocation());
+		FRotator InterpRotation = FMath::RInterpTo(GetActorRotation(), LookAtYaw, DeltaTime, fInterSpeed);
+		
+		SetActorRotation(InterpRotation);
+	}
 }
 
+FRotator AMain::GetLookAtRotationYaw(FVector Target)
+{
+	FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), Target);
+	FRotator LookAtRotationYaw(0, LookAtRotation.Yaw, 0);
+	return LookAtRotationYaw;
+}
 
 // Called to bind functionality to input
 void AMain::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -379,6 +398,8 @@ void AMain::Attack()
 {
 	if (!bAttacking)
 	{
+		SetInterToEnemy(true);
+
 		bAttacking = true;
 
 		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
@@ -402,16 +423,17 @@ void AMain::Attack()
 			}
 		}
 
-		if (m_EquippedWeapon->SwingSound)
+		/*if (m_EquippedWeapon->SwingSound)
 		{
-			//UGameplayStatics::PlaySound2D(this, m_EquippedWeapon->SwingSound);
-		}
+			UGameplayStatics::PlaySound2D(this, m_EquippedWeapon->SwingSound);
+		}*/
 	}
 }
 
 void AMain::AttackEnd()
 {
 	bAttacking = false;
+	SetInterToEnemy(false);
 
 	if (bLMBDown)
 	{
@@ -423,4 +445,9 @@ void AMain::PlaySwingSound()
 {
 	if(m_EquippedWeapon->SwingSound)
 		UGameplayStatics::PlaySound2D(this, m_EquippedWeapon->SwingSound);
+}
+
+void AMain::SetInterToEnemy(bool bInterp)
+{
+	bInterToEnemy = bInterp;
 }

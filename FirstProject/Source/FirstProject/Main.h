@@ -65,6 +65,22 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	float fMinSprintStamina;
 
+	// 보간 처리
+
+	float fInterSpeed;
+	bool bInterToEnemy;
+	void SetInterToEnemy(bool bInterp);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
+	class AEnemy* CombatTarget;
+
+	FORCEINLINE void SetCombatTarget(AEnemy* Target) { CombatTarget = Target; }
+	FORCEINLINE AEnemy* GetCombatTarget() { return CombatTarget; }
+
+	FRotator GetLookAtRotationYaw(FVector Target);
+
+	//
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Running")
 		float fRunningSpeed;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Running")
