@@ -130,7 +130,11 @@ public:
 
 	void DecrementHealth(float amount);
 
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+
 	void IncrementCoins(int32 amount);
+
+	//static float ApplyDamage(AActor* DamagedActor, float BaseDamage, AController* EventInstigator, AActor* DamageCauser, TSubclassOf< class UDamageType > DamageTypeClass) override;
 
 	void Die();
 
