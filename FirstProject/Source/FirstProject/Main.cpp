@@ -79,6 +79,7 @@ AMain::AMain()
 
 	bAttacking = false;
 
+	// 보간
 	fInterSpeed = 15.0f;
 	bInterToEnemy = false;
 }
@@ -199,10 +200,11 @@ void AMain::Tick(float DeltaTime)
 		default:;
 	}
 
-	if (bInterToEnemy && CombatTarget)
+	if (bInterToEnemy && CombatTarget)		// 적에게 타격을 가하고 적의 CombatZone에 들어가있었을때 동시조건이 성립시
 	{
 		FRotator LookAtYaw = GetLookAtRotationYaw(CombatTarget->GetActorLocation());
 		FRotator InterpRotation = FMath::RInterpTo(GetActorRotation(), LookAtYaw, DeltaTime, fInterSpeed);
+		UE_LOG(LogTemp, Warning, TEXT("Call InterpRotation %f  bInterToEnemy %s  CombatTarget %s"), InterpRotation.Yaw, bInterToEnemy ? TEXT("TRUE") : TEXT("False"), CombatTarget ? TEXT("ALIVE") : TEXT("NULL"));
 		
 		SetActorRotation(InterpRotation);
 	}
